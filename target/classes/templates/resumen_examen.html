@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Resumen del Examen</title>
+</head>
+<body>
+    <h2>¡Examen finalizado!</h2>
+    <p>Has acertado <b th:text="${aciertos}"></b> de <b th:text="${total}"></b> preguntas.</p>
+    <h3>Detalle de tus respuestas:</h3>
+    <table border="1">
+        <tr>
+            <th>#</th>
+            <th>Frase 1</th>
+            <th>Frase 2</th>
+            <th>Tu respuesta</th>
+            <th>Correcta</th>
+            <th>Explicación</th>
+        </tr>
+        <tr th:each="res, iter : ${resultados}">
+            <td th:text="${iter.index + 1}"></td>
+            <td th:text="${preguntasExamen[iter.index].frase1}"></td>
+            <td th:text="${preguntasExamen[iter.index].frase2}"></td>
+            <td th:text="${res.respuestaUsuario}"></td>
+            <td th:text="${res.correcta} ? 'Sí' : 'No'"></td>
+            <td th:utext="${res.explicacion}"></td>
+        </tr>
+    </table>
+    <form th:action="@{/}" method="get">
+        <button type="submit">Volver al Inicio</button>
+    </form>
+</body>
+</html>

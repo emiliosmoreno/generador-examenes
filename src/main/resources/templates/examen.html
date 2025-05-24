@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Examen de Inglés</title>
+</head>
+<body>
+    <h2>Examen de Inglés</h2>
+    <div th:if="${preguntas != null and indice != null}">
+        <form th:action="@{/examen/responder}" method="post">
+            <input type="hidden" name="examenId" th:value="${examen.id}" />
+            <input type="hidden" name="preguntaId" th:value="${preguntas[indice].id}" />
+            <input type="hidden" name="indice" th:value="${indice}" />
+            <p>
+                <b th:text="${preguntas[indice].frase1}"></b>
+            </p>
+            <p>
+                <span th:utext="${frase2Dialogo}"></span>
+            </p>
+            <div>
+                <label>Introduce la parte que falta (donde aparecen los guiones):</label><br>
+                <input type="text" name="respuestaUsuario" required />
+            </div>
+            <br><br>
+            <button type="submit">Responder</button>
+        </form>
+        <form th:action="@{/examen/finalizar}" method="post" style="display:inline;">
+            <input type="hidden" name="examenId" th:value="${examen.id}" />
+            <button type="submit">Finalizar Examen</button>
+        </form>
+        <form th:action="@{/examen/pasar}" method="get" style="display:inline;">
+            <input type="hidden" name="examenId" th:value="${examen.id}" />
+            <input type="hidden" name="indice" th:value="${indice}" />
+            <button type="submit">Pasar de Pregunta</button>
+        </form>
+        <p>Pregunta <span th:text="${preguntaActual}"></span> de <span th:text="${totalPreguntas}"></span></p>
+    </div>
+</body>
+</html>

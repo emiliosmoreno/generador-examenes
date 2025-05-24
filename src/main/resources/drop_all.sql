@@ -1,0 +1,6 @@
+DROP TABLE IF EXISTS resultado;
+DROP TABLE IF EXISTS examen_pregunta;
+DROP TABLE IF EXISTS examen;
+DROP TABLE IF EXISTS pregunta;
+DROP TABLE IF EXISTS tiempo_verbal;
+DROP TABLE IF EXISTS verbo;

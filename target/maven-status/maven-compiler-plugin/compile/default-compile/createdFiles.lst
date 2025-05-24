@@ -1,0 +1,10 @@
+com\example\controller\ExamenController.class
+com\example\repository\ExamenRepository.class
+com\example\GeneradorExamenesApplication.class
+com\example\service\ExamenService$ResumenExamen.class
+com\example\model\Pregunta.class
+com\example\repository\PreguntaRepository.class
+com\example\model\Resultado.class
+com\example\model\Examen.class
+com\example\repository\ResultadoRepository.class
+com\example\service\ExamenService.class

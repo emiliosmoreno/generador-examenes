@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Generador de Exámenes de Inglés</title>
+</head>
+<body>
+    <h1>Generador de Exámenes de Inglés</h1>
+    <form th:action="@{/examen/nuevo}" method="get">
+        <button type="submit">Generar Examen</button>
+    </form>
+    <form th:action="@{/resultados}" method="get">
+        <button type="submit">Ver Resultados</button>
+    </form>
+</body>
+</html>

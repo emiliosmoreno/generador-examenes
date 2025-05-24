@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Resultados de Exámenes</title>
+</head>
+<body>
+    <h2>Resumen de Exámenes</h2>
+    <table border="1">
+        <tr>
+            <th>ID Examen</th>
+            <th>Fecha de creación</th>
+            <th>Total preguntas</th>
+            <th>Puntuación</th>
+        </tr>
+        <tr th:each="resumen : ${resumenesExamen}">
+            <td th:text="${resumen.examenId}"></td>
+            <td th:text="${#temporals.format(resumen.fechaCreacion, 'yyyy-MM-dd HH:mm')}"></td>
+            <td th:text="${resumen.totalPreguntas}"></td>
+            <td th:text="${resumen.aciertos} + ' / ' + ${resumen.totalPreguntas}"></td>
+        </tr>
+    </table>
+    <h2>Historial de Resultados</h2>
+    <table border="1">
+        <tr>
+            <th>Examen</th>
+            <th>Pregunta</th>
+            <th>Respuesta Usuario</th>
+            <th>Correcta</th>
+            <th>Explicación</th>
+        </tr>
+        <tr th:each="resultado : ${resultados}">
+            <td ><span th:text="${resultado.examenId}"></span></td>
+            <td ><span th:text="${resultado.preguntaId}"></span></td>
+            <td ><span th:text="${resultado.respuestaUsuario}"></span></td>
+            <td ><span th:text="${resultado.correcta} ? 'Sí' : 'No'"></span></td>
+            <td ><span th:text="${resultado.explicacion}"></span></td>
+        </tr>
+    </table>
+    <form th:action="@{/resultados/eliminar}" method="post">
+        <button type="submit">Eliminar Historial</button>
+    </form>
+    <form th:action="@{/}" method="get">
+        <button type="submit">Volver al Inicio</button>
+    </form>
+</body>
+</html>

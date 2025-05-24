@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Explicación</title>
+</head>
+<body>
+    <h2 th:text="${correcta} ? '¡Correcto!' : 'Incorrecto'"></h2>
+    <div th:if="${!correcta}">
+        <p><b>Tu respuesta:</b> <span th:text="${respuestaUsuario}"></span></p>
+        <p><b>Respuesta correcta:</b> <span th:text="${respuestaCorrecta}"></span></p>
+    </div>
+    <p th:utext="${explicacion}"></p>
+    <div style="margin-top:1em;">
+        <div><b>Frase 1:</b> <span th:text="${frase1}"></span></div>
+        <div><b>Frase 2:</b> <span th:text="${frase2}"></span></div>
+    </div>
+    <form th:action="@{/examen/pasar}" method="get">
+        <input type="hidden" name="examenId" th:value="${examen.id}" />
+        <input type="hidden" name="indice" th:value="${indice}" />
+        <button type="submit">Siguiente Pregunta</button>
+    </form>
+    <form th:action="@{/}" method="get">
+        <button type="submit">Volver al Inicio</button>
+    </form>
+</body>
+</html>

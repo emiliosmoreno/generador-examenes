@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Explicación Verbo (2 tiempos)</title>
+</head>
+<body>
+    <h2 th:text="${correcta} ? '¡Correcto!' : 'Incorrecto'"></h2>
+    <div>
+        <b>Respuesta correcta:</b><br>
+        Infinitivo: <span th:text="${verbo.infinitivo}"></span><br>
+        Pasado simple: <span th:text="${verbo.pasadoSimple}"></span><br>
+        <b>Significado:</b> <span th:text="${verbo.significado}"></span>
+    </div>
+    <div style="margin-top:1em;">
+        <b>Tu respuesta:</b><br>
+        Infinitivo: <span th:text="${infinitivoUsuario}"></span><br>
+        Pasado simple: <span th:text="${pasadoSimpleUsuario}"></span><br>
+    </div>
+    <form th:action="@{/examen-verbo2/pasar}" method="get" style="display:inline;">
+        <input type="hidden" name="examenId" th:value="${examen.id}" />
+        <input type="hidden" name="indice" th:value="${indice}" />
+        <button type="submit">Siguiente Pregunta</button>
+    </form>
+    <form th:action="@{/examen-verbo2/finalizar}" method="post" style="display:inline;">
+        <input type="hidden" name="examenId" th:value="${examen.id}" />
+        <button type="submit">Finalizar Examen</button>
+    </form>
+    <form th:action="@{/}" method="get" style="display:inline;">
+        <button type="submit">Volver al Inicio</button>
+    </form>
+</body>
+</html>

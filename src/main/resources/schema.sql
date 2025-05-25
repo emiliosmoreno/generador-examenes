@@ -30,7 +30,8 @@ CREATE TABLE pregunta (
 -- Opcional: tabla para almacenar exámenes generados
 CREATE TABLE examen (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    fecha_creacion DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+    fecha_creacion DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    tipo VARCHAR(16) NOT NULL
 );
 
 CREATE TABLE examen_pregunta (
@@ -44,7 +45,7 @@ CREATE TABLE examen_pregunta (
 CREATE TABLE resultado (
     id INT AUTO_INCREMENT PRIMARY KEY,
     examen_id INT NOT NULL,
-    pregunta_id INT NOT NULL,
+    pregunta_id INT NULL,
     respuesta_usuario VARCHAR(255) NOT NULL,
     correcta BOOLEAN NOT NULL,
     explicacion VARCHAR(255),

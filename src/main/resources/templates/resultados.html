@@ -3,9 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <title>Resultados de Exámenes</title>
+    <style>
+        .aprobado { background-color: #d4edda; } /* verde pastel */
+        .suspendido { background-color: #f8d7da; } /* rojo pastel */
+        .correcta { background-color: #d4edda; } /* verde pastel */
+        .erronea { background-color: #f8d7da; } /* rojo pastel */
+    </style>
 </head>
 <body>
-    <h2>Resumen de Exámenes</h2>
+    <h2>Resumen de Exámenes de Frases</h2>
     <table border="1">
         <tr>
             <th>ID Examen</th>
@@ -13,7 +19,40 @@
             <th>Total preguntas</th>
             <th>Puntuación</th>
         </tr>
-        <tr th:each="resumen : ${resumenesExamen}">
+        <tr th:each="resumen : ${resumenesFrases}"
+            th:class="${resumen.aprobado} ? 'aprobado' : 'suspendido'">
+            <td th:text="${resumen.examenId}"></td>
+            <td th:text="${#temporals.format(resumen.fechaCreacion, 'yyyy-MM-dd HH:mm')}"></td>
+            <td th:text="${resumen.totalPreguntas}"></td>
+            <td th:text="${resumen.aciertos} + ' / ' + ${resumen.totalPreguntas}"></td>
+        </tr>
+    </table>
+    <h2>Resumen de Exámenes de Verbos (3 tiempos)</h2>
+    <table border="1">
+        <tr>
+            <th>ID Examen</th>
+            <th>Fecha de creación</th>
+            <th>Total preguntas</th>
+            <th>Puntuación</th>
+        </tr>
+        <tr th:each="resumen : ${resumenesVerbo3}"
+            th:class="${resumen.aprobado} ? 'aprobado' : 'suspendido'">
+            <td th:text="${resumen.examenId}"></td>
+            <td th:text="${#temporals.format(resumen.fechaCreacion, 'yyyy-MM-dd HH:mm')}"></td>
+            <td th:text="${resumen.totalPreguntas}"></td>
+            <td th:text="${resumen.aciertos} + ' / ' + ${resumen.totalPreguntas}"></td>
+        </tr>
+    </table>
+    <h2>Resumen de Exámenes de Verbos (2 tiempos)</h2>
+    <table border="1">
+        <tr>
+            <th>ID Examen</th>
+            <th>Fecha de creación</th>
+            <th>Total preguntas</th>
+            <th>Puntuación</th>
+        </tr>
+        <tr th:each="resumen : ${resumenesVerbo2}"
+            th:class="${resumen.aprobado} ? 'aprobado' : 'suspendido'">
             <td th:text="${resumen.examenId}"></td>
             <td th:text="${#temporals.format(resumen.fechaCreacion, 'yyyy-MM-dd HH:mm')}"></td>
             <td th:text="${resumen.totalPreguntas}"></td>
@@ -29,12 +68,29 @@
             <th>Correcta</th>
             <th>Explicación</th>
         </tr>
-        <tr th:each="resultado : ${resultados}">
+        <tr th:each="resultado : ${resultados}"
+            th:class="${resultado.correcta} ? 'correcta' : 'erronea'">
             <td ><span th:text="${resultado.examenId}"></span></td>
             <td ><span th:text="${resultado.preguntaId}"></span></td>
             <td ><span th:text="${resultado.respuestaUsuario}"></span></td>
             <td ><span th:text="${resultado.correcta} ? 'Sí' : 'No'"></span></td>
-            <td ><span th:text="${resultado.explicacion}"></span></td>
+            <td ><span th:utext="${resultado.explicacion}"></span></td>
+        </tr>
+    </table>
+    <!-- Histórico de preguntas: colorear según correcta/errónea -->
+    <table border="1">
+        <tr>
+            <th>Pregunta</th>
+            <th>Respuesta Usuario</th>
+            <th>Respuesta Correcta</th>
+            <th>Explicación</th>
+        </tr>
+        <tr th:each="res : ${resumenFrases}"
+            th:class="${res.correcta} ? 'correcta' : 'erronea'">
+            <td th:text="${res.pregunta}"></td>
+            <td th:text="${res.respuestaUsuario}"></td>
+            <td th:text="${res.respuestaCorrecta}"></td>
+            <td th:utext="${res.explicacion}"></td>
         </tr>
     </table>
     <form th:action="@{/resultados/eliminar}" method="post">

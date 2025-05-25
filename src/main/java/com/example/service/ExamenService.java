@@ -31,9 +31,10 @@ public class ExamenService {
         return todas.subList(0, Math.min(cantidad, todas.size()));
     }
 
-    public Examen crearExamen() {
+    public Examen crearExamen(String tipo) {
         Examen examen = new Examen();
         examen.setFechaCreacion(java.time.LocalDateTime.now());
+        examen.setTipo(tipo);
         return examenRepository.save(examen);
     }
 
@@ -47,6 +48,7 @@ public class ExamenService {
 
     public void eliminarResultados() {
         resultadoRepository.deleteAll();
+        examenRepository.deleteAll();
     }
 
     public Examen obtenerExamenPorId(Long id) {
@@ -67,6 +69,10 @@ public class ExamenService {
             this.fechaCreacion = fechaCreacion;
             this.totalPreguntas = totalPreguntas;
             this.aciertos = aciertos;
+        }
+        public boolean isAprobado() {
+            // Aprobado si aciertos >= 5 (exámenes siempre de 10 preguntas)
+            return aciertos >= 5;
         }
     }
 

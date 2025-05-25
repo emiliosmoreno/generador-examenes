@@ -3,6 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Resumen del Examen</title>
+    <style>
+        .correcta { background-color: #d4edda; }
+        .erronea { background-color: #f8d7da; }
+    </style>
 </head>
 <body>
     <h2>¡Examen finalizado!</h2>
@@ -17,7 +21,8 @@
             <th>Correcta</th>
             <th>Explicación</th>
         </tr>
-        <tr th:each="res, iter : ${resultados}">
+        <tr th:each="res, iter : ${resultados}"
+            th:class="${res.correcta} ? 'correcta' : 'erronea'">
             <td th:text="${iter.index + 1}"></td>
             <td th:text="${preguntasExamen[iter.index].frase1}"></td>
             <td th:text="${preguntasExamen[iter.index].frase2}"></td>

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import jakarta.servlet.http.HttpSession;
@@ -25,7 +26,7 @@ public class ExamenController {
 
     @GetMapping("/examen/nuevo")
     public String nuevoExamen(Model model, HttpSession session) {
-        Examen examen = examenService.crearExamen();
+        Examen examen = examenService.crearExamen("FRASES");
         List<Pregunta> preguntas = examenService.obtenerPreguntasAleatorias(10);
         session.setAttribute("examenId", examen.getId());
         session.setAttribute("preguntas", preguntas);
@@ -143,8 +144,24 @@ public class ExamenController {
 
     @GetMapping("/resultados")
     public String verResultados(Model model) {
+        List<ExamenService.ResumenExamen> resumenes = examenService.obtenerResumenesExamen();
+        List<ExamenService.ResumenExamen> resumenesFrases = new ArrayList<>();
+        List<ExamenService.ResumenExamen> resumenesVerbo3 = new ArrayList<>();
+        List<ExamenService.ResumenExamen> resumenesVerbo2 = new ArrayList<>();
+        for (ExamenService.ResumenExamen resumen : resumenes) {
+            Examen examen = examenService.obtenerExamenPorId(resumen.examenId);
+            if (examen != null && examen.getTipo() != null) {
+                switch (examen.getTipo()) {
+                    case "FRASES": resumenesFrases.add(resumen); break;
+                    case "VERBO3": resumenesVerbo3.add(resumen); break;
+                    case "VERBO2": resumenesVerbo2.add(resumen); break;
+                }
+            }
+        }
+        model.addAttribute("resumenesFrases", resumenesFrases);
+        model.addAttribute("resumenesVerbo3", resumenesVerbo3);
+        model.addAttribute("resumenesVerbo2", resumenesVerbo2);
         model.addAttribute("resultados", examenService.obtenerResultados());
-        model.addAttribute("resumenesExamen", examenService.obtenerResumenesExamen());
         return "resultados";
     }
 

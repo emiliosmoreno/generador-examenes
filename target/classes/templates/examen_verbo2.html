@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Examen de Verbos (2 tiempos)</title>
+</head>
+<body>
+    <h2>Examen de Verbos Irregulares (2 tiempos)</h2>
+    <div th:if="${verbos != null and indice != null}">
+        <form th:action="@{/examen-verbo2/responder}" method="post">
+            <input type="hidden" name="examenId" th:value="${examen.id}" />
+            <input type="hidden" name="indice" th:value="${indice}" />
+            <input type="hidden" name="tipo" th:value="${tipo}" />
+            <input type="hidden" name="verboId" th:value="${verbo.id}" />
+            <div th:switch="${tipo}">
+                <!-- Tipo 1: Español, escribir las 2 formas -->
+                <div th:case="1">
+                    <b th:text="${verbo.significado}"></b> <span>(escribe el infinitivo y el pasado en inglés)</span><br>
+                    Infinitivo: <input type="text" name="infinitivo" required><br>
+                    Pasado simple: <input type="text" name="pasadoSimple" required><br>
+                </div>
+                <!-- Tipo 2: Español, una forma dada, pide la otra -->
+                <div th:case="2">
+                    <b th:text="${verbo.significado}"></b> <span>(completa la forma faltante)</span><br>
+                    <span th:if="${dado} == 'infinitivo'">Infinitivo: <b th:text="${dadoValor}"></b><br></span>
+                    <span th:if="${dado} != 'infinitivo'">Infinitivo: <input type="text" name="infinitivo" required><br></span>
+                    <span th:if="${dado} == 'pasadoSimple'">Pasado simple: <b th:text="${dadoValor}"></b><br></span>
+                    <span th:if="${dado} != 'pasadoSimple'">Pasado simple: <input type="text" name="pasadoSimple" required><br></span>
+                </div>
+            </div>
+            <br>
+            <button type="submit">Responder</button>
+        </form>
+        <form th:action="@{/examen-verbo2/finalizar}" method="post" style="display:inline;">
+            <input type="hidden" name="examenId" th:value="${examen.id}" />
+            <button type="submit">Finalizar Examen</button>
+        </form>
+        <p>Pregunta <span th:text="${preguntaActual}"></span> de <span th:text="${totalPreguntas}"></span></p>
+    </div>
+</body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Resumen Examen Verbos</title>
+    <style>
+        .correcta { background-color: #d4edda; }
+        .erronea { background-color: #f8d7da; }
+    </style>
+</head>
+<body>
+    <h2>¡Examen de Verbos finalizado!</h2>
+    <table border="1">
+        <tr>
+            <th>#</th>
+            <th>Significado</th>
+            <th>Infinitivo</th>
+            <th>Pasado simple</th>
+            <th>Participio pasado</th>
+            <th>Tu respuesta</th>
+            <th>¿Correcto?</th>
+        </tr>
+        <tr th:each="item, iter : ${respuestasVerbo}"
+            th:class="${item.correcta} ? 'correcta' : 'erronea'">
+            <td th:text="${iter.index + 1}"></td>
+            <td th:text="${item.verbo.significado}"></td>
+            <td th:text="${item.verbo.infinitivo}"></td>
+            <td th:text="${item.verbo.pasadoSimple}"></td>
+            <td th:text="${item.verbo.participioPasado}"></td>
+            <td>
+                <span th:text="'Inf: ' + ${item.respuestaInfinitivo}"></span><br>
+                <span th:text="'PS: ' + ${item.respuestaPasadoSimple}"></span><br>
+                <span th:text="'PP: ' + ${item.respuestaParticipioPasado}"></span>
+            </td>
+            <td th:text="${item.correcta} ? 'Sí' : 'No'"></td>
+        </tr>
+    </table>
+    <form th:action="@{/}" method="get">
+        <button type="submit">Volver al Inicio</button>
+    </form>
+</body>
+</html>
